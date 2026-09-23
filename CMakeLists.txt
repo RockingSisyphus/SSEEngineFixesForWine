@@ -248,6 +248,7 @@ if(BUILD_TESTS)
     add_executable(sseef_tests
         tests/test_x86_instr_len.cpp
         tests/test_cave_encoding.cpp
+        tests/test_render_pass_retirement.cpp
     )
     target_link_libraries(sseef_tests PRIVATE Catch2::Catch2WithMain)
     target_compile_features(sseef_tests PRIVATE cxx_std_17)

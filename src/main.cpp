@@ -25,6 +25,7 @@
 #include "patches/form_caching.h"
 #include "patches/memory_manager.h"
 #include "patches/patches.h"
+#include "patches/renderpass_cache.h"
 #include "patches/save_added_sound_categories.h"
 #include "settings.h"
 #include "warnings/warnings.h"
@@ -43,6 +44,7 @@ void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
             // Log memory allocator stats before other kDataLoaded work
             if (Settings::Memory::bReplaceAllocator.GetValue())
                 Patches::WineMemoryManager::LogStats();
+            Patches::RenderPassCache::LogStats();
 
             // v1.22.22: Force form loading if the engine skipped it.
             // Under Wine with 600+ plugins, CompileFiles is skipped, which
@@ -123,6 +125,7 @@ void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
     case SKSE::MessagingInterface::kPostLoadGame:
         {
             logger::info(">>> kPostLoadGame fired <<<");
+            Patches::RenderPassCache::LogStats();
             // Fallback: retry editor ID cache if kDataLoaded found nothing.
             if (Settings::Patches::bEditorIdCache.GetValue())
                 Patches::EditorIdCache::OnDataLoaded();
@@ -310,6 +313,7 @@ extern "C" __declspec(dllexport) bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadIn
     // The original Engine Fixes uses Intel TBB which crashes under Wine; we replace
     // with mimalloc which uses per-thread caches and avoids global lock contention.
     Patches::WineMemoryManager::Install();
+    Patches::RenderPassCache::Install();
 
     // Install all patches and fixes during SKSE load (not preload).
     // This is the key difference from Engine Fixes — Wine/CrossOver/Proton

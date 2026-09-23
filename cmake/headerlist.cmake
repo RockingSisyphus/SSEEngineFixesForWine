@@ -56,6 +56,8 @@ set(headers ${headers}
 	src/patches/max_stdio.h
 	src/patches/memory_manager.h
 	src/patches/patches.h
+	src/patches/render_pass_retirement.h
+	src/patches/renderpass_cache.h
 	src/patches/regular_quicksaves.h
 	src/patches/safe_exit.h
 	src/patches/save_added_sound_categories.h

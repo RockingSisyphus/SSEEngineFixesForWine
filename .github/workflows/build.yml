@@ -54,10 +54,14 @@ jobs:
           -DVCPKG_TARGET_TRIPLET=x64-windows-static
           -DCMAKE_TOOLCHAIN_FILE=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
           -DCOPY_BUILD=OFF
+          -DBUILD_TESTS=ON
           ${{ matrix.define }}
 
       - name: Build
         run: cmake --build build --config ${{ env.BUILD_TYPE }}
+
+      - name: Test
+        run: ctest --test-dir build -C ${{ env.BUILD_TYPE }} --output-on-failure
 
       - name: Package
         run: |

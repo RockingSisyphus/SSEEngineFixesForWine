@@ -74,6 +74,7 @@ namespace Settings
 
     namespace Memory
     {
+        static REX::TOML::Bool bOverrideRenderPassCache("Memory", "bOverrideRenderPassCache", false);
         static REX::TOML::Bool bReplaceAllocator("Memory", "bReplaceAllocator", true);
         static REX::TOML::Bool bExpandScrapHeap("Memory", "bExpandScrapHeap", true);
         static REX::TOML::U32  uScrapHeapSizeMB("Memory", "uScrapHeapSizeMB", 512);

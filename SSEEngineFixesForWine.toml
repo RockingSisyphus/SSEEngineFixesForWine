@@ -127,6 +127,9 @@ bWaterflowAnimation = true
 fWaterflowSpeed = 20.0
 
 [Memory]
+# Replace the SE 1.5.97 render-pass pools to avoid cross-pool shutdown deadlocks.
+# Experimental on other mod lists; unsupported runtimes ignore this setting.
+bOverrideRenderPassCache = false
 # Replace the engine's memory allocator with Wine-compatible mimalloc (mi_zalloc).
 # The original SSE Engine Fixes uses Intel TBB which crashes under Wine.
 # mimalloc uses per-thread caches and avoids global lock contention.
